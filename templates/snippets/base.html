@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {%block page_title%}
+    {%endblock page_title%}
+  </title>
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+@media (max-width:640px) {
+      .uk-text-large {
+        font-size: 16px
+      }
+    }
+  </style>
+</head>
+<body>
+    {%block navbar%}
+    <div class="uk-section-primary uk-preserve-color">
+
+    <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-light; top: 200">
+
+        <nav class="uk-navbar-container uk-dark uk-background-dark uk-margin" uk-navbar>
+            <div class="uk-navbar-left ">
+
+                <a class="uk-navbar-item uk-logo" href="#">SharkCMS</a>
+            </div>
+            <div class="uk-position-right">
+                <ul class="uk-navbar-nav">
+                    <li>
+                         {% if user.is_authenticated %}
+                         <a href="#" class="">
+
+                        <p class="uk-button uk-button-default uk-button-small">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            {{user.username}}
+                        </p>
+                    </a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li><a href="{%url 'user:logout'%}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                                </svg> Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+           
+
+            {%else%}
+        
+            {%endif%}
+        
+
+    
+</nav>
+</div>
+{%endblock navbar%}
+</div>
+  {%block main_body%}
+  {%endblock main_body%}
+</div>
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>

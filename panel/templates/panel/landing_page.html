@@ -1,0 +1,19 @@
+{% extends 'snippets/base.html' %}
+{%block navbar%}{%endblock%}
+{%block main_body%}
+<div class="uk-container uk-light uk-background-primary" uk-height-viewport="expand : true">
+    <div class="uk-container uk-text-center uk-text-left@m uk-margin-auto">
+        <h1 class="uk-text-center uk-margin-top">SharkCMS</h1>
+        <p class="uk-text-justify uk-text-large">
+            Menurut Kamus Besar Bahasa Indonesia (KBBI), pengertian menulis adalah melahirkan pikiran atau perasaan (seperti mengarang, membuat surat) dengan tulisan. Menulis berarti menuangkan isi hati si penulis ke dalam bentuk tulisan, sehingga maksud hati penulis bisa diketahui banyak orang orang melalui tulisan yang dituliskan.
+        </p>
+
+        <p>
+            Mari mulai menulis dengan SharkCMS. Gratis Selamanya
+        </p>
+
+        <a class="uk-button uk-button-default  uk-button-large" href="{% url 'user:login' %}">Masuk / Daftar</a>
+        <br><br>
+    </div>
+</div>
+{%endblock main_body%}
