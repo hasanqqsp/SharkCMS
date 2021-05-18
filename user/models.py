@@ -7,7 +7,7 @@ from django.db.models.signals import post_save #add this
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='user_uploads/',null=True,blank=True)
+    #avatar = models.ImageField(upload_to='user_uploads/',null=True,blank=True)
     is_writer = models.BooleanField(default = True)
     is_trusted_writer = models.BooleanField(default = False)
     is_moderator = models.BooleanField(default = False)
@@ -25,3 +25,12 @@ class UserProfile(models.Model):
             UserProfile.objects.create(user=instance)
     def __str__(self):
         return self.user.username
+
+class Violation(models.Model):
+    category = models.CharField( max_length=256)
+        
+class Report(models.Model):
+    report_id = models.CharField(unique=True, primary_key=True,editable=True,max_length=16)
+    reporter = models.ForeignKey(User,on_delete=models.CASCADE, related_name='reporter')
+    suspect = models.ForeignKey(User,on_delete=models.CASCADE, related_name='suspect')
+    violation_type = models.ForeignKey(Violation,on_delete=models.CASCADE, related_name='violation')
