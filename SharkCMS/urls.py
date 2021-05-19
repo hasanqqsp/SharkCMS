@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from panel import views as panel_views
+from . import settings 
 urlpatterns = [
   path('admin/', admin.site.urls),
   path('',panel_views.LandingPageView.as_view(),name='landing'),
+  path('article/',include('content.urls',namespace='article')),
   path('user/',include('user.urls',namespace = 'user')),
+  path('api/',include('api.urls',namespace='api')),
   path('accounts/', include('allauth.urls')),
-]
+  ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

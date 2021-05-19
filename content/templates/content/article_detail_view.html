@@ -1,0 +1,8 @@
+{% extends 'snippets/base.html' %}
+{% block main_body %}
+<form action="{% url 'api:claps' %}" method="post" accept-charset="utf-8">
+    <input type="text" name="id" id="id" value="" />
+    <input type="checkbox" name="is-clap" id="is-clap" />
+    <button type="submit">Like</button>
+</form>
+{% endblock%}

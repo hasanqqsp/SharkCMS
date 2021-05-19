@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7==_-=e(z*h!*a#9_9xx37t7@pb8re8#oja73csm_ue)s91nwo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -56,7 +56,7 @@ MIDDLEWARE = [
   'django.middleware.security.SecurityMiddleware',
   'django.contrib.sessions.middleware.SessionMiddleware',
   'django.middleware.common.CommonMiddleware',
-  'django.middleware.csrf.CsrfViewMiddleware',
+  #'django.middleware.csrf.CsrfViewMiddleware',
   'django.contrib.auth.middleware.AuthenticationMiddleware',
   'django.contrib.messages.middleware.MessageMiddleware',
   'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -72,6 +72,7 @@ TEMPLATES = [{
     'context_processors': [
       'django.template.context_processors.debug',
       'django.template.context_processors.request',
+      'django.template.context_processors.media',
       'django.contrib.auth.context_processors.auth',
       'django.contrib.messages.context_processors.messages',
       'django.template.context_processors.request',
@@ -179,6 +180,10 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+# Media Upload Settings
+MEDIA_URL = '/user_uploads/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'user_uploads')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SITE_ID = 0
+SITE_ID = 2
