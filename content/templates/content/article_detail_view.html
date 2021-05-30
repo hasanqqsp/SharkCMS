@@ -1,8 +1,112 @@
 {% extends 'snippets/base.html' %}
 {% block main_body %}
-<form action="{% url 'api:claps' %}" method="post" accept-charset="utf-8">
-    <input type="text" name="id" id="id" value="" />
-    <input type="checkbox" name="is-clap" id="is-clap" />
-    <button type="submit">Like</button>
-</form>
+<main>
+    <section id="article-container" class="uk-container uk-margin-remove-top uk-container-large ">
+        <div class="head"></div>
+
+           <div class="article-content"></div> 
+           
+        </section>
+    <div class="uk-container-large uk-margin-large-top uk-container">
+    <button class="clap-button uk-button uk-margin-bottom uk-padding-small-horizontal">10000 CLAP</button>    
+   
+    <div class="writer-profile-card uk-card uk-card-default uk-width-1-2@m">
+    <div class="uk-card-header">
+        <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-auto uk-margin-remove">
+                <img class="writer-avatar uk-border-circle" width="40" height="40" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9CGh88WwR8hAX_NKjKC_WrOOzT-cVnGsw34DgCji_TEIPJaIl1Hbkeia5&s=10">
+            </div>
+            <div class="uk-width-expand">
+                <h3 class="uk-card-title uk-margin-remove wirter-name">Hasan Ismail Abdulmalik</h3>
+                <p class="uk-text-meta uk-margin-remove ">Bergabung pada <span class="writer-registered-at"></span>12 Januari 2021</p>
+                <span class="uk-label">TRUSTED WRITER</span>
+                <span class="uk-label uk-label-warning">MODERATOR</span>
+                <span class="uk-label uk-label-success">ADMIN</span>
+                
+            </div>
+        </div>
+    </div>
+    <div class="writer-short-bio uk-card-body uk-margin-small uk-padding-small">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+    </div>
+    
+</div>
+<article class="uk-comment uk-comment-primary">
+    <header class="uk-comment-header">
+        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+            <div class="uk-width-auto">
+                <img class="uk-comment-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9CGh88WwR8hAX_NKjKC_WrOOzT-cVnGsw34DgCji_TEIPJaIl1Hbkeia5&s=10" width="80" height="80" alt="">
+            </div>
+            <div class="uk-width-expand">
+                <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">Author</a></h4>
+                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                    <li><a href="#">12 days ago</a></li>
+                    <li><a href="#">Reply</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="uk-comment-body">
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+    </div>
+</article>
+ </div>    
+</main>
+
+<script type="text/javascript" charset="utf-8">
+    article_id = ''
+    const renderHead = e => {
+        document.querySelector('.head').innerHTML =`<h1 class="article-title uk-heading-medium uk-heading-divider uk-margin-remove-bottom">${e.title}</h1>
+        <p class="uk-margin-remove-top uk-text-meta uk-text-italic"><span class="writer-name">${e.author.first_name ?  e.author.first_name + e.author.last_name : e.author.username}</span> - <span class="published-at">${e.published_on}</span></p>
+        
+        <article>
+            <img class="article-thumbnail uk-margin-bottom"data-src="${e.thumbnail}" style="width:100%; aspect-ratio:16/9;object-fit:cover" alt="" uk-img>`
+    }
+    is_clap = ''
+    getClapsInfo = article_id => {
+        clapButton = document.querySelector('.clap-button')
+        fetch(`/api/article/claps?id=${article_id}`)
+        .then(res => res.json()
+        .then(res => {
+            is_clap = res.data.is_clap
+            if (res.data.is_clap){
+                clapButton.classList.add('uk-button-primary')
+            }else {
+               clapButton.classList.remove('uk-button-primary')
+            }
+            document.querySelector('.clap-button').innerText = `${res.data.clap_count} CLAPS`
+        }))
+    }
+    clapButton = document.querySelector('.clap-button')
+    async function clapButtonClicked(){
+        clap = is_clap ? 'null' : 'on'
+        data = { "id" : article_id,
+                 "is-clap" : clap}
+        await fetch('{% url 'api:claps' %}',{
+            method : 'POST',
+            body : JSON.stringify(data)
+        
+        })
+        getClapsInfo(article_id)
+    }
+    clapButton.addEventListener('click',clapButtonClicked)
+    fetch("/api" + window.location.pathname + "?format=json",{method : 'GET'})
+    .then(res => res.json()
+    .then(res => {
+        article_id = res[0].article_id
+        renderHead(res[0])
+        getClapsInfo(res[0].article_id)
+        document.querySelector('.article-content').innerText = res[0].content
+    })
+    .catch(err => console.log(err.toString()))
+    )
+    
+    
+    
+</script>
+
+
+
+
+
 {% endblock%}

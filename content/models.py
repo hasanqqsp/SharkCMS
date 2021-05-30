@@ -10,7 +10,7 @@ class Article(models.Model):
     article_id = models.CharField(unique=True, primary_key=True,editable=True,max_length=16)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     posted_on = models.DateTimeField(auto_now_add=True)
-    slug = models.CharField(max_length=255,editable=True)
+    slug = models.CharField(max_length=255,editable=True, unique=True)
     updated_on = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     published_on = models.DateTimeField(blank=True,null=True)
